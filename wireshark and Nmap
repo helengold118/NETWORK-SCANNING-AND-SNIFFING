@@ -1,0 +1,277 @@
+🔐 Network Scanning and Sniffing
+A Practical Study Using Nmap and Wireshark
+📌 Overview
+
+Network scanning and sniffing are core techniques in cybersecurity, ethical hacking, and network defense. They help security professionals discover active hosts, open ports, running services, and analyze live network traffic for potential threats.
+
+This project focuses exclusively on:
+
+Nmap → Network discovery and scanning
+
+Wireshark → Packet sniffing and traffic analysis
+
+Both tools are widely used by penetration testers, SOC analysts, and digital forensic investigators.
+
+🎯 Objectives
+
+The objectives of this project are to:
+
+Understand the fundamentals of network scanning and packet sniffing
+
+Perform host discovery, port scanning, and service detection using Nmap
+
+Capture and analyze network traffic using Wireshark
+
+Identify security risks such as open ports, insecure protocols, and suspicious traffic
+
+Demonstrate how attackers and defenders use these tools differently
+
+🧠 Key Concepts
+Network Scanning
+
+Network scanning is the process of identifying:
+
+Live hosts
+
+Open ports
+
+Running services
+
+Operating systems
+
+It is usually active and involves sending packets to target systems.
+
+Network Sniffing
+
+Network sniffing involves:
+
+Capturing packets traversing a network
+
+Inspecting packet headers and payloads
+
+Detecting malicious or abnormal traffic
+
+It is often passive, meaning it does not directly interact with the target.
+
+🛠 Tools Used
+🔹 Nmap (Network Mapper)
+
+Nmap is an open-source tool used for:
+
+Host discovery
+
+Port scanning
+
+Service and version detection
+
+OS fingerprinting
+
+🔹 Wireshark
+
+Wireshark is a network protocol analyzer used to:
+
+Capture live network traffic
+
+Analyze packets at different OSI layers
+
+Troubleshoot network and security issues
+
+🔍 Part 1: Network Scanning with Nmap
+1️⃣ Host Discovery
+
+Used to identify active devices on a network.
+
+nmap -sn 192.168.1.0/24
+
+
+🔹 Sends ICMP echo requests and ARP probes
+🔹 Lists live hosts without scanning ports
+
+Security Insight:
+Attackers use host discovery to map networks. Defenders use it for asset inventory.
+
+2️⃣ Port Scanning
+
+Identifies open, closed, and filtered ports.
+
+nmap 192.168.1.10
+
+
+🔹 Default scan checks the most common 1,000 TCP ports
+🔹 Reveals exposed services
+
+Common Port Risks:
+
+Port 21 (FTP) – cleartext authentication
+
+Port 23 (Telnet) – insecure remote access
+
+Port 80/443 – web attack surface
+
+3️⃣ Service and Version Detection
+
+Determines what service is running on an open port.
+
+nmap -sV 192.168.1.10
+
+
+🔹 Identifies service name and version
+🔹 Useful for vulnerability matching
+
+Example Risk:
+Outdated Apache or OpenSSH versions may contain known exploits.
+
+4️⃣ OS Detection
+
+Attempts to identify the target operating system.
+
+nmap -O 192.168.1.10
+
+
+🔹 Uses TCP/IP fingerprinting
+🔹 Helps attackers tailor exploits
+
+5️⃣ Aggressive Scan
+
+Combines multiple scanning techniques.
+
+nmap -A 192.168.1.10
+
+
+Includes:
+
+OS detection
+
+Version detection
+
+Script scanning
+
+Traceroute
+
+⚠️ Note: Very noisy and easily detected by IDS/IPS systems.
+
+📡 Part 2: Network Sniffing with Wireshark
+1️⃣ Packet Capture
+
+Wireshark captures packets from a selected network interface.
+
+Steps:
+
+Launch Wireshark
+
+Select active interface (Ethernet/Wi-Fi)
+
+Click Start Capture
+
+Captured packets include:
+
+Source & destination IPs
+
+Protocols
+
+Payload data
+
+2️⃣ Understanding Packet Structure
+
+Each packet is divided into:
+
+Frame layer
+
+Ethernet layer
+
+IP layer
+
+Transport layer (TCP/UDP)
+
+Application layer
+
+Wireshark decodes packets layer by layer.
+
+3️⃣ Display Filters (Traffic Analysis)
+HTTP Traffic
+http
+
+TCP Traffic
+tcp
+
+DNS Queries
+dns
+
+Filter by IP Address
+ip.addr == 192.168.1.10
+
+
+🔹 Filters do not stop capture
+🔹 They only control what is displayed
+
+4️⃣ Analyzing HTTP Traffic
+
+Wireshark can inspect unencrypted HTTP data.
+
+http.request.method == "POST"
+
+
+🔹 Shows login attempts
+🔹 Exposes usernames and passwords if not encrypted
+
+Security Risk:
+Cleartext protocols leak sensitive data.
+
+5️⃣ Detecting Suspicious Activity
+
+Wireshark helps identify:
+
+Port scans (repeated SYN packets)
+
+ARP spoofing
+
+DNS tunneling
+
+Unusual traffic spikes
+
+Example of possible scan detection:
+
+Multiple SYN packets to different ports
+
+No completed TCP handshakes
+
+🔗 Relationship Between Nmap and Wireshark
+Tool	Purpose	Role
+Nmap	Active scanning	Discovery & enumeration
+Wireshark	Passive sniffing	Traffic analysis & evidence
+
+💡 Defensive Insight:
+Wireshark can capture and analyze Nmap scan traffic, making it useful for detecting reconnaissance attempts.
+
+⚠️ Ethical & Legal Considerations
+
+Only scan networks you own or have permission to test
+
+Unauthorized scanning may violate laws and policies
+
+Ethical hacking requires consent and documentation
+
+🧾 Conclusion
+
+Nmap and Wireshark are essential tools in modern cybersecurity.
+While Nmap provides visibility into network structure and exposed services, Wireshark reveals how data flows across the network.
+
+Together, they form a powerful combination for:
+
+Network defense
+
+Threat detection
+
+Digital forensics
+
+Ethical hacking
+
+Understanding both tools enhances a security professional’s ability to detect, analyze, and prevent cyber threats.
+
+📚 References
+
+Nmap Official Documentation
+
+Wireshark User Guide
+
+TCP/IP and Network Security Standards
